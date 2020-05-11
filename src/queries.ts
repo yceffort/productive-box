@@ -10,7 +10,7 @@ export const userInfoQuery = `
 export const createContributedRepoQuery = (username: string) => `
   query {
     user(login: "${username}") {
-      repositoriesContributedTo(last: 100) {
+      repositoriesContributedTo(last: 500) {
         nodes {
           name
           owner {
@@ -32,7 +32,7 @@ export const createCommittedDateQuery = (
       ref(qualifiedName: "master") {
         target {
           ... on Commit {
-            history(first: 100, author: { id: "${id}" }) {
+            history(first: 500, author: { id: "${id}" }) {
               edges {
                 node {
                   committedDate
