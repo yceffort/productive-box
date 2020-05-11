@@ -62,15 +62,14 @@ interface IRepo {
     committedTimeResponse?.data?.repository?.ref?.target?.history?.edges.forEach(
       (edge) => {
         const committedDate = edge?.node?.committedDate
-        const timeString = new Date(committedDate).toLocaleTimeString(
-          [process.env.LOCALE, 'ko-KR'],
+        const utcTime = new Date(committedDate)
+        utcTime.setHours(utcTime.getHours() + 9)
+        const timeString = utcTime.toLocaleTimeString(
+          [process.env.LOCALE, 'en-US'],
           { hour12: false },
         )
         const hour = +timeString.split(':')[0]
 
-        /**
-         * voting and counting
-         */
         if (hour >= 6 && hour < 12) morning++
         if (hour >= 12 && hour < 18) daytime++
         if (hour >= 18 && hour < 24) evening++
